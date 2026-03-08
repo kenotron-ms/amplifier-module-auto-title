@@ -20,28 +20,37 @@ The agent sets the title at the start of each session and updates it when switch
 
 ---
 
-## Quick Start
+## Quick Start (App Bundle — Recommended)
 
-Add to your `.amplifier/bundle.md`:
+Install globally so terminal titling works in **every** Amplifier session, no per-project config needed:
 
-```yaml
-includes:
-  - bundle: git+https://github.com/kenotron/amplifier-module-auto-title@main
+```bash
+amplifier bundle add git+https://github.com/kenotron-ms/amplifier-module-auto-title@main --app
 ```
 
-That's it. The bundle includes foundation and the terminal-title behavior.
+That's it. Restart Amplifier and titles start appearing automatically.
+
+> **What `--app` does:** Registers the bundle as a global app bundle that auto-composes with every session, stored in `~/.amplifier/`. No need to touch any project's `bundle.md`.
 
 ---
 
-## Just the Behavior (Recommended for Existing Bundles)
+## Project-Level Install
 
-If you already have your own bundle and just want to add terminal titling:
+If you only want terminal titling in a specific project, add it to your `.amplifier/bundle.md`:
+
+```yaml
+includes:
+  - bundle: git+https://github.com/kenotron-ms/amplifier-module-auto-title@main
+```
+
+### Just the Behavior (for existing bundles)
+
+If you already have your own bundle and just want to add the behavior:
 
 ```yaml
 includes:
   - bundle: git+https://github.com/microsoft/amplifier-foundation@main
-  - bundle: git+https://github.com/kenotron/amplifier-module-auto-title@main#subdirectory=behaviors/terminal-title.yaml
-  - bundle: myapp:behaviors/my-other-behavior
+  - bundle: git+https://github.com/kenotron-ms/amplifier-module-auto-title@main#subdirectory=behaviors/terminal-title.yaml
 ```
 
 ---
