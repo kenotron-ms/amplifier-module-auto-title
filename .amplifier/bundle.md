@@ -22,16 +22,14 @@ includes:
   - bundle: git+https://github.com/microsoft/amplifier-bundle-skills@main#subdirectory=behaviors/skills.yaml
 
   # ── Terminal title ─────────────────────────────────────────────────────────────
-  - bundle: git+https://github.com/kenotron/amplifier-module-auto-title@main#subdirectory=behaviors/terminal-title.yaml
+  - bundle: git+https://github.com/kenotron-ms/amplifier-module-auto-title@main#subdirectory=behaviors/terminal-title.yaml
 
   # ── File editing (apply_patch tool) ───────────────────────────────────────────
   - bundle: git+https://github.com/microsoft/amplifier-bundle-filesystem@main#subdirectory=behaviors/apply-patch.yaml
 
-  # ── Memory / engram ───────────────────────────────────────────────────────────
   # ── Stories (content creation & submission) ──────────────────────────────────
   - bundle: git+https://github.com/microsoft/amplifier-bundle-stories@main#subdirectory=behaviors/stories.yaml
 
-  - bundle: git+https://github.com/kenotron-ms/engram@main#subdirectory=behaviors/engram.yaml
 
 session:
   orchestrator:
