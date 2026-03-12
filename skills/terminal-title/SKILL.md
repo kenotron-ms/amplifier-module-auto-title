@@ -32,7 +32,11 @@ version: 1.0.0
 
 ## How to Set the Title
 
-Run this inline bash snippet — no external script needed:
+Title updates use a **fire-and-forget delegate** — fire it in the same response turn as your reply, not before. The delegate runs in parallel and the user gets their response immediately.
+
+See `terminal-title:context/terminal-title-awareness.md` for the exact delegate call to use (it includes the bash snippet pre-embedded in the instruction).
+
+**The bash command the delegate runs:**
 
 ```bash
 DIR_NAME=$(basename "$PWD")
@@ -44,12 +48,7 @@ else
 fi
 ```
 
-**Quick one-liner (no prefix support):**
-```bash
-printf '\033]0;%s | %s\007' "$(basename "$PWD")" "Your Title Here"
-```
-
-The `CLAUDE_TITLE_PREFIX` environment variable allows users to add a custom prefix (e.g., an emoji or team name). You don't need to handle this — the snippet does it automatically.
+The `CLAUDE_TITLE_PREFIX` environment variable allows users to add a custom prefix (e.g., an emoji or team name). The snippet handles it automatically.
 
 ## Title Format
 

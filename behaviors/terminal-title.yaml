@@ -16,7 +16,7 @@ tools:
   - module: tool-skills
     config:
       skills:
-        - git+https://github.com/kenotron/amplifier-module-auto-title@main#subdirectory=skills
+        - git+https://github.com/kenotron-ms/amplifier-module-auto-title@main#subdirectory=skills
 
 context:
   include:
