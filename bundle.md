@@ -8,12 +8,8 @@ bundle:
     glance what each session is working on.
 
 includes:
-  - bundle: git+https://github.com/microsoft/amplifier-foundation@main
   - bundle: terminal-title:behaviors/terminal-title
 ---
 
 @terminal-title:context/terminal-title-awareness.md
 
----
-
-@foundation:context/shared/common-system-base.md
