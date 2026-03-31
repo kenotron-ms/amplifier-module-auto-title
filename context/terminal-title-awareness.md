@@ -1,23 +1,35 @@
 # Terminal Title Awareness
 
-This session has terminal title updating enabled.
+> **This module now uses a hook-based approach.** The terminal title is set
+> automatically by the `hooks-auto-title` hook module — no agent action required.
 
-**When to update:** Session start (after the user's first message) and major task switches. Do NOT update for follow-ups, clarifications, or iterations within the same task.
+## How It Works
 
-**How to update:** Determine the title, then fire a **fire-and-forget delegate in the same response turn** as your reply. Do not block your user response — fire the delegate and reply simultaneously.
+The `hooks-auto-title` hook listens on `prompt:complete` at priority 200
+(after `hooks-session-naming` at priority 100). Once the session-naming hook
+writes a name to `metadata.json`, this hook reads it and immediately prints
+the ANSI OSC0 escape sequence to update the terminal window/tab title.
 
-**Title format:** `[Action]: [Specific Focus]` — ≤40 chars  
-*Examples:* `Build: Dashboard UI` · `Debug: Auth Flow` · `Fix: Login Redirect` · `Explore: Session Lifecycle`
+**No LLM call is needed.** The title is the session name computed by
+`hooks-session-naming` — not a separate inference step.
 
-**Fire this delegate alongside your response (fill in `<YOUR TITLE>`):**
+## Title Format
+
+The terminal title follows this pattern:
 
 ```
-delegate(
-  agent="self",
-  context_depth="none",
-  model_role="fast",
-  instruction="TERMINAL TITLE ONLY — run this bash command exactly. Do not do anything else. Do not load skills. Do not fire further delegates.\n\nDIR_NAME=$(basename \"$PWD\")\nTITLE=\"<YOUR TITLE>\"\nif [ -n \"$CLAUDE_TITLE_PREFIX\" ]; then\n  printf '\\033]0;%s %s | %s\\007' \"$CLAUDE_TITLE_PREFIX\" \"$DIR_NAME\" \"$TITLE\"\nelse\n  printf '\\033]0;%s | %s\\007' \"$DIR_NAME\" \"$TITLE\"\nfi"
-)
+[dir-name] | [session name]
 ```
 
-**⚠️ Sub-agent guard:** If your incoming instruction begins with `TERMINAL TITLE ONLY`, you are the title-update delegate. Run the bash command in your instruction and do nothing else — do not fire another delegate.
+If `$CLAUDE_TITLE_PREFIX` is set, the title becomes:
+
+```
+[prefix] [dir-name] | [session name]
+```
+
+## Timeline
+
+The title is set after the session name is first generated, which happens on
+turn 2 by default (configurable via `hooks-session-naming`'s
+`initial_trigger_turn`). Subsequent changes to the session name (e.g., as
+context accumulates) also update the title.

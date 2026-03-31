@@ -1,0 +1,17 @@
+[project]
+name = "amplifier-module-hooks-auto-title"
+version = "1.0.0"
+description = "Terminal window title hook for Amplifier — sets title from session name"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = []  # amplifier-core is a peer dependency — do NOT declare it here
+
+[project.entry-points."amplifier.modules"]
+hooks-auto-title = "amplifier_module_hooks_auto_title:mount"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["amplifier_module_hooks_auto_title"]

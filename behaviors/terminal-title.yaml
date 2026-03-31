@@ -1,23 +1,12 @@
 bundle:
   name: terminal-title-behavior
-  version: 1.0.0
+  version: 2.0.0
   description: >
-    Watches the current task context and updates the terminal window title
-    automatically. Teaches the agent when and how to set titles via the
-    terminal-title skill. Designed to be composed into any bundle.
+    Watches the session name and updates the terminal window title automatically.
+    Hooks into prompt:complete (after hooks-session-naming) to reuse the name
+    already computed — no extra LLM call required. Designed to be composed into
+    any bundle.
 
-# Includes both the tool-skills tool AND the visibility hook (auto-announces
-# available skills to the agent before each turn)
-includes:
-  - bundle: git+https://github.com/microsoft/amplifier-module-tool-skills@main#subdirectory=behaviors/skills.yaml
-
-# Deep-merged config: registers this bundle's skills directory as an additional source
-tools:
-  - module: tool-skills
-    config:
-      skills:
-        - git+https://github.com/kenotron-ms/amplifier-module-auto-title@main#subdirectory=skills
-
-context:
-  include:
-    - terminal-title:context/terminal-title-awareness.md
+hooks:
+  - module: hooks-auto-title
+    source: git+https://github.com/kenotron-ms/amplifier-module-auto-title@main#subdirectory=modules/hooks-auto-title
